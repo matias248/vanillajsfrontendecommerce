@@ -4,7 +4,7 @@ interface MinusPlusInputInterface {
     modifyValue: (value: number) => void;
 }
 
-export function MinusPlusInput(props: MinusPlusInputInterface): HTMLElement {
+export function MinusPlusInput(props: MinusPlusInputInterface): {htmlelement:HTMLElement,modifyValueWithoutCallingPropsMethod:(arg0: number)=> void} {
 
     let emptyValue = false;
     const container = document.createElement("div");
@@ -35,20 +35,20 @@ export function MinusPlusInput(props: MinusPlusInputInterface): HTMLElement {
     };
 
     const minusFunction = () => {
-        props.modifyValue(internalValue - 1);
-        internalValue -=1; 
+
+        props.modifyValue(--internalValue);
         emptyValue = false;
         updateUI();
     };
 
     const plusFunction = () => {
-        props.modifyValue(internalValue + 1);
-        internalValue +=1; 
+        internalValue++
+        props.modifyValue(internalValue );
         emptyValue = false;
         updateUI();
     };
 
-    const modifyValue = (newValue:number) =>{
+    const modifyValueWithoutCallingPropsMethod = (newValue:number) =>{
         internalValue = newValue
         emptyValue = false;
         updateUI();
@@ -92,5 +92,5 @@ export function MinusPlusInput(props: MinusPlusInputInterface): HTMLElement {
     // --- INIT ---
     updateUI();
 
-    return container;
+    return {htmlelement:container , modifyValueWithoutCallingPropsMethod};
 }

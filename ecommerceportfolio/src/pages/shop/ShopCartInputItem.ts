@@ -77,7 +77,7 @@ export function ShopProductImageGallery(
                     props.changeQuantityInCartShop(props.cartItem, value);
                 }
             })
-            minusPlusInputContainer.appendChild(minusPlusInput);
+            minusPlusInputContainer.appendChild(minusPlusInput.htmlelement);
 
             textWrapper.appendChild(nameWrapper);
             textWrapper.appendChild(priceWrapper);

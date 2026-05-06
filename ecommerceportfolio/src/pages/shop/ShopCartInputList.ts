@@ -45,6 +45,6 @@ export const ShopCartInputList = (props: ShopCartInputListProps) => {
         }
     })
 
-
+    container.appendChild(renderEmpty());
     return container;
 };

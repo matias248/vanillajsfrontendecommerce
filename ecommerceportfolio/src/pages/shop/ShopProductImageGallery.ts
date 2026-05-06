@@ -11,8 +11,8 @@ interface ProductImageGalleryProps {
 export interface ShopProductImageGallery {
     root: HTMLElement,
     changeValueQuantity: (newValue: number) => void;
-
 }
+
 export function ShopProductImageGallery(
     props: ProductImageGalleryProps
 ): ShopProductImageGallery {
@@ -23,6 +23,8 @@ export function ShopProductImageGallery(
     container.id = "ShopProductElementGallery" + props.cartItem.id;
     container.className = "h-75 min-w-64 bg-white border border-gray-200 rounded-lg shadow-xs";
     let valueQuantity = props.cartItem.quantity;
+    let modifyValueOnlyInVue: ((arg0: number) => void) | null = null
+
 
     function render() {
         container.innerHTML = "";
@@ -98,7 +100,8 @@ export function ShopProductImageGallery(
                     props.changeQuantityInCartShop(props.cartItem, value);
                 }
             })
-            minusPlusInputContainer.appendChild(minusPlusInput);
+            minusPlusInputContainer.appendChild(minusPlusInput.htmlelement);
+            modifyValueOnlyInVue = minusPlusInput.modifyValueWithoutCallingPropsMethod
 
             buttonWrapper.appendChild(button);
             textWrapper.appendChild(nameWrapper);
@@ -137,6 +140,8 @@ export function ShopProductImageGallery(
     }
     const changeValueQuantity = (newValue: number) => {
         valueQuantity = newValue
+        if(modifyValueOnlyInVue)
+        modifyValueOnlyInVue(newValue)
     }
 
     render();

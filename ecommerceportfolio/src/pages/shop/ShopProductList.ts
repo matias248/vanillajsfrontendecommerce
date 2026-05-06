@@ -99,8 +99,6 @@ export const ShopProductList = (props: ShopProductListInterface) => {
         newproducts.forEach((product)=> {
             if(cartItems.has(product.id)){
                 let c = cartItems.get(product.id);
-                alert("aa")
-                console.log(getQuantityOfProductInCartShop(cartData,product.id))
                 c?.changeValueQuantity(getQuantityOfProductInCartShop(cartData,product.id))
             }
         })
