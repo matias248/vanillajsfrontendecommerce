@@ -6,6 +6,7 @@ import { StoreList } from "./src/pages/stores/storeList.js"
 import { ProductForm } from "./src/pages/products/productForm.ts"
 import {ProductDetailPage} from "./src/pages/products/productDetails.ts"
 import {ShopTemplate} from "./src/pages/shop/shopTemplate.ts"
+
 export const PATHS = {
     home: {
         path: "/",

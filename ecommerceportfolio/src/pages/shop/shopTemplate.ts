@@ -108,18 +108,6 @@ export function ShopTemplate() {
         shopTextFilter: ""
     })
 
-    let subscribeHandlerShopTextFilter = (
-        functionToDo: (state: ShopTextFilterObserverState) => void
-    ): () => void => {
-        return shopTextFilterObserver.subscribe(functionToDo);
-    };
-
-    let updateTextFilter = (newState: string) => {
-        shopTextFilterObserver.setState({
-            shopTextFilter: newState
-        });
-    }
-
     // productFilterObserver
     const productTextFilterObserver = createStore<{ productsTextFilterObserver: string }>({
         productsTextFilterObserver: ""

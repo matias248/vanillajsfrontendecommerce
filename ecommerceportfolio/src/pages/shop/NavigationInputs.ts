@@ -8,7 +8,7 @@ type NavigationInputsProps = {
   updateProductsFiltersObserverList: (newCurentPage: number) => void;
 };
 
-export const NavigationInputs = (props: NavigationInputsProps): HTMLElement => {
+export const NavigationInputs = (props: NavigationInputsProps): { container: HTMLElement, reRender: () => void } => {
   const container = document.createElement("div");
   let currentPage = props.getCurrentPage();
   let totalPages = props.getTotalPages();
@@ -16,6 +16,9 @@ export const NavigationInputs = (props: NavigationInputsProps): HTMLElement => {
   const middle = document.createElement("div");
   const input = document.createElement("input");
   const rightButton = document.createElement("button");
+  const label = document.createElement("div");
+  label.className = "rounded-md dark:text-white h-[25px] whitespace-nowrap";
+
 
   let firstRender = () => {
     container.className = "flex gap-[6px] " + (props.styleOverride ?? "");
@@ -45,9 +48,6 @@ export const NavigationInputs = (props: NavigationInputsProps): HTMLElement => {
         props.updateProductsFiltersObserverList(Number(inputValue))
       }
     });
-
-    const label = document.createElement("div");
-    label.className = "rounded-md dark:text-white h-[25px] whitespace-nowrap";
     label.textContent =
       "of " + (totalPages === 0 ? "1" : String(totalPages));
 
@@ -63,6 +63,8 @@ export const NavigationInputs = (props: NavigationInputsProps): HTMLElement => {
     rightButton.addEventListener("click", (event) => {
       event.stopPropagation();
       let newValue: number = currentPage + 1;
+      console.log(newValue +" "+ currentPage);
+
       props.updateProductsFiltersObserverList(newValue)
     });
   }
@@ -75,12 +77,21 @@ export const NavigationInputs = (props: NavigationInputsProps): HTMLElement => {
     rightButton.disabled = currentPage >= totalPages;
   })
 
-
   container.appendChild(leftButton);
   container.appendChild(middle);
   container.appendChild(rightButton);
-
   firstRender();
 
-  return container;
+  const reRender = () => {
+    currentPage = props.getCurrentPage();
+    totalPages = props.getTotalPages();
+    input.value = currentPage !== 0 ? String(currentPage) : "";
+    label.textContent =
+      "of " + (totalPages === 0 ? "1" : String(totalPages));
+      
+    rightButton.disabled = currentPage >= totalPages;
+    leftButton.disabled = currentPage <= 1;
+  }
+
+  return { container, reRender: reRender };
 };

@@ -30,40 +30,60 @@ export class ShopHeader {
   private localProductTextfilter = "";
   private numberOfElementsInCartShop = 0;
 
+  private cartButtonFixed!: HTMLElement;
+  private stickyContainer2: HTMLElement;
+  private cartWrapper: HTMLElement;
+
   constructor(props: ShopHeaderProps) {
+
+
+    this.stickyContainer2 = document.createElement('div');
+    this.stickyContainer2.className = "mx-auto max-w-[1000px]  w-[90%] flex flex-row-reverse px-2 py-1";
+
+
     this.props = props
     this.numberOfElementsInCartShop = this.props.numberOfElementsInCartShopHandler();
     this.cartButton = document.createElement("button")
     this.cartButton.id = "shoppingCart"
     this.cartButton.className =
-      "relative bg-blue-600 hover:bg-blue-700 rounded-full p-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-hidden"
+      "relative bg-blue-600 hover:bg-blue-700 rounded-full p-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-hidden "
 
     this.cartCounter = document.createElement("div");
     this.cartCounter.className = `absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full my-auto text-center flex items-center justify-center overflow-hidden ${(this.numberOfElementsInCartShop ?? 0) > 9 ? "size-6" : "size-5"}`
 
-
+    this.cartButtonFixed = document.createElement('div');
+    this.cartButtonFixed.id = "shoppingCartFixed"
     // crear root
     this.root = document.createElement("header")
     this.root.className = "h-[64px] mb-4 sm:mb-8"
+    this.cartWrapper = document.createElement("div")
+    this.cartWrapper.className = "flex items-center lg:order-2"
+
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting && !this.isComponentVisible) {
+          this.isComponentVisible = true;
+          this.cartButton.className =
+            "relative bg-blue-600 hover:bg-blue-700 rounded-full p-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-hidden"
+          this.cartWrapper.appendChild(this.cartButton)
+        }
+
+        if (!entry.isIntersecting && this.isComponentVisible) {
+          this.isComponentVisible = false;
+          this.cartButton.className += " pointer-events-auto animate-fade-in-scale "
+          this.stickyContainer2.appendChild(this.cartButton);
+        }
+
+      });
+    });
+    observer.observe(this.cartWrapper);
 
     // render inicial
     this.render()
 
 
-    // scroll listener para sticky cart
-    this.setupScrollListener()
-  }
-
-  /* ------------------ SCROLL VISIBILITY ------------------ */
-  private setupScrollListener() {
-    const threshold = 64 // altura del header
-    window.addEventListener("scroll", () => {
-      const visible = window.scrollY < threshold
-      if (visible !== this.isComponentVisible) {
-        this.isComponentVisible = visible
-        //this.renderStickyCart()
-      }
-    })
   }
 
   /* ------------------ UPDATE CART COUNT ------------------ */
@@ -101,10 +121,6 @@ export class ShopHeader {
     searchWrapper.className = "flex-1"
     searchWrapper.appendChild(searchBar.root);
 
-    const cartWrapper = document.createElement("div")
-    cartWrapper.className = "flex items-center lg:order-2"
-
-
     this.cartButton.addEventListener("click", () => this.props.handlerCartListVisble(true))
 
     const cartIcon = document.createElement("div")
@@ -129,21 +145,22 @@ export class ShopHeader {
     }
 
     this.cartButton.appendChild(cartIcon)
-    cartWrapper.appendChild(this.cartButton)
+    this.cartWrapper.appendChild(this.cartButton)
 
     // ensamblar flex row
     flexRow.appendChild(selectorWrapper)
     flexRow.appendChild(searchWrapper)
-    flexRow.appendChild(cartWrapper)
+    flexRow.appendChild(this.cartWrapper)
     container.appendChild(flexRow)
     this.root.appendChild(container)
 
     // sticky cart placeholder
-    const stickyContainer = document.createElement("div")
-    stickyContainer.id = "stickyCartPlaceholder"
+    let stickyContainer = document.createElement("div");
+    stickyContainer.className = "fixed w-full top-4 pointer-events-none";
+    stickyContainer.id = "stickyCartPlaceholder";
+    stickyContainer.appendChild(this.stickyContainer2)
     this.root.appendChild(stickyContainer)
 
-    //this.renderStickyCart()
   }
 
   public onChangeCartCounter(state: CartShopObserverState) {
@@ -159,53 +176,10 @@ export class ShopHeader {
       this.cartCounter.className = `absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full my-auto text-center flex items-center justify-center overflow-hidden ${(this.numberOfElementsInCartShop ?? 0) > 9 ? "size-6" : "size-5"}`
       this.cartButton.appendChild(this.cartCounter)
     }
-    else{
+    else {
       this.cartCounter?.remove()
     }
   }
-
-  /*private renderStickyCart() {
-    const placeholder = this.root.querySelector("#stickyCartPlaceholder")!
-    placeholder.innerHTML = ""
-
-    if (this.isComponentVisible) return
-
-    const stickyWrapper = document.createElement("div")
-    stickyWrapper.className = "fixed w-full top-4 pointer-events-none"
-
-    const inner = document.createElement("div")
-    inner.className = "mx-auto max-w-[1000px] w-[90%] flex flex-row-reverse px-2 py-1"
-
-    const cartButton = document.createElement("button")
-    cartButton.id = "shoppingCartFixed"
-    cartButton.className =
-      "relative bg-blue-600 hover:bg-blue-700 rounded-full p-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-hidden pointer-events-auto"
-    cartButton.addEventListener("click", () => this.props.handlerCartListVisble(true))
-
-    const cartIcon = document.createElement("div")
-    cartIcon.className = "size-6"
-    cartIcon.appendChild(ShoppingCartIcon())
-
-    this.cartCounterFixed = document.createElement("div")
-    this.cartCounterFixed.className = `absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full my-auto text-center flex items-center justify-center overflow-hidden ${
-      (this.props.numberOfElementsInCartShop ?? 0) > 9 ? "size-6" : "size-5"
-    }`
-    this.cartCounterFixed.textContent =
-      this.props.numberOfElementsInCartShop && this.props.numberOfElementsInCartShop > 0
-        ? this.props.numberOfElementsInCartShop > 99
-          ? "+99"
-          : this.props.numberOfElementsInCartShop.toString()
-        : ""
-
-    if (this.props.numberOfElementsInCartShop && this.props.numberOfElementsInCartShop !== 0) {
-      cartButton.appendChild(this.cartCounterFixed)
-    }
-
-    cartButton.appendChild(cartIcon)
-    inner.appendChild(cartButton)
-    stickyWrapper.appendChild(inner)
-    placeholder.appendChild(stickyWrapper)
-  }*/
 
   getRoot() {
     return this.root;

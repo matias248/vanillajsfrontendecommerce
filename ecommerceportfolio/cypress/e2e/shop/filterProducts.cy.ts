@@ -15,8 +15,8 @@ describe('filters on the shop', () => {
     })
 
     it('text store filter method is applied', function () {
-        cy.get('#ShopSelectorInput').contains('Store not selected')
-        cy.contains('My store').click();
+        cy.get('#ShopSelectorInput1').contains('Store not selected')
+        cy.contains('My Store').click();
         cy.contains('Simple Store').should('exist');
         cy.contains('Neo store').should('exist');
         cy.get('#default-searchfiltershops').type('Neo');
@@ -27,7 +27,7 @@ describe('filters on the shop', () => {
         cy.get('#ShopProductElementGallery1').should('not.exist');
         cy.get('#ShopProductElementGallery2').should('not.exist');
         cy.get('#ShopProductElementGallery3').should('exist');
-        cy.get('#ShopSelectorInput').contains('Neo store')
+        cy.get('#ShopSelectorInput1').contains('Neo store')
 
     })
 
@@ -41,7 +41,7 @@ describe('filters on the shop', () => {
         cy.get('#shopProductList').get('#ShopProductElementGallery1').should('exist');
         cy.get('#shopProductList').get('#ShopProductElementGallery2').should('not.exist');
         cy.get('#shopProductList').get('#ShopProductElementGallery3').should('not.exist');
-        cy.contains('My store').click();
+        cy.contains('My Store').click();
         cy.contains('Neo store').click();
         cy.get('[name="confirmDialogShopButton"]').click();
         cy.get('#shopProductListContainer').get('#ShopProductElementGallery1').should('not.exist');

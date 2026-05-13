@@ -33,10 +33,11 @@ export const ShopProductList = (props: ShopProductListInterface) => {
 
     const mainContainer = document.createElement('div');
     mainContainer.className = "max-w-[1200px] mx-auto w-[90%] flex flex-col "
+    mainContainer.id = "shopProductListContainer"
 
     const shopProductListContainer = document.createElement('div');
-    shopProductListContainer.className = "grid grid-cols-1 min-[1040px]:grid-cols-3 xl:grid-cols-4 md:gap-y-4 gap-y-6 rounded-lg  min-h-[300px] dark:bg-gray-600 bg-gray-300 p-2 md:justify-items-center"
-
+    shopProductListContainer.className = "grid grid-cols-1 min-[1040px]:grid-cols-3 xl:grid-cols-4 md:gap-y-4 gap-y-6 rounded-lg  min-h-[300px] dark:bg-gray-600 bg-gray-300 p-2 md:justify-items-center "
+    shopProductListContainer.id = "shopProductList"
     //navigation Inputs
     let navigationInputsProps = {
         getCurrentPage: () => props.getCurrentPage(),
@@ -45,11 +46,12 @@ export const ShopProductList = (props: ShopProductListInterface) => {
         observerSuscribe: props.subscribeHandlerProductsFiltersObserverList,
         updateProductsFiltersObserverList: props.updateProductsFiltersObserverList
     }
-    const navigationInputsContainer = NavigationInputs(navigationInputsProps);
+    let navigationInputsContainer = NavigationInputs(navigationInputsProps);
 
     let render = () => {
         mainContainer.innerHTML = "";
-        mainContainer.appendChild(navigationInputsContainer);
+        navigationInputsContainer.reRender();
+        mainContainer.appendChild(navigationInputsContainer.container);
 
         if (isLoading && products === undefined || products === undefined || products && products.length === 0) {
             mainContainer.appendChild(noItemFound);

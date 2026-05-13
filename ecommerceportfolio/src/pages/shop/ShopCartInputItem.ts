@@ -70,7 +70,7 @@ export function ShopProductImageGallery(
             minusPlusInputContainer.className = " h-16 flex justify-center items-center rounded-lg"
 
             const minusPlusInput = MinusPlusInput({
-                id: "minusPlusProductItem" + props.cartItem.id,
+                id: "minusPlusCartItem" + props.cartItem.id,
                 initialValue: valueQuantity,
                 modifyValue: function (value: number): void {
                     valueQuantity = value;

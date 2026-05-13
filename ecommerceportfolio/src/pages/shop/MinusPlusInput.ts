@@ -19,6 +19,7 @@ export function MinusPlusInput(props: MinusPlusInputInterface): {htmlelement:HTM
     input.id = props.id + "input";
     input.className = "mx-2 border border-gray-200 text-center w-16 h-10";
     input.type = "text";
+    
 
     const plusBtn = document.createElement("button");
     plusBtn.id = props.id + "-";
