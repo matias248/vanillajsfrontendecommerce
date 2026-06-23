@@ -2,12 +2,15 @@ import { Router } from './router.js';
 import { PATHS } from './routes.js';
 import { Header } from "./src/components/header.js";
 import { NavigationPath } from './src/components/navigationPath.js';
+import { RouterHash } from './routerHash.js';
+
 
 function getCurrentRoute() {
   const { pathname } = window.location;
   return pathname === "/" ? "home" : pathname.replace("/", "");
 }
-const ROUTER = new Router(PATHS);
+//const ROUTER = new Router(PATHS);
+const ROUTERHASH = new RouterHash(PATHS);
 
 
 let headerInstance = null;
@@ -17,9 +20,9 @@ function renderHeader() {
     headerInstance.remove();
   }
   headerInstance = Header({
-    currentRoute: getCurrentRoute(),
+    currentRoute: ROUTERHASH.getCurrentRoute(),
     onNavigate: (route) => {
-      ROUTER.load(route);
+      ROUTERHASH.load(route);
       renderHeader();
 
     },
@@ -33,12 +36,11 @@ function renderHeader() {
 
 function initApp() {
   renderHeader();
-
   window.addEventListener("popstate", () => {
-    ROUTER.load(getCurrentRoute(), false);
+    ROUTERHASH.load(getCurrentRoute(), false);
     renderHeader();
   });
-  ROUTER.load(getCurrentRoute());
+  ROUTERHASH.load(getCurrentRoute());
 }
 
 

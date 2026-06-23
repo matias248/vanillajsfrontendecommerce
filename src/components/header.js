@@ -8,7 +8,7 @@ export function Header({ onNavigate, currentRoute }) {
 
   let buttons = "";
 
-  if (currentRoute !== "stores") {
+  if (currentRoute !== "/stores") {
     buttons += `
       <button data-route="/stores" class="nav-btn text-white bg-blue-600 hover:bg-blue-700 flex gap-1 px-4 py-2 rounded-lg">
         <div id=NavigationFormsApp class="size-6">${formsIcon}</div>
@@ -17,7 +17,7 @@ export function Header({ onNavigate, currentRoute }) {
     `;
   }
 
-  if (currentRoute !== "shop") {
+  if (currentRoute !== "/shop") {
     buttons += `
       <button data-route="/shop" class="nav-btn text-white bg-blue-600 hover:bg-blue-700 flex gap-1 px-4 py-2 rounded-lg">
         <div id=NavigationShopApp class="size-6">${shopIcon}</div>
@@ -31,7 +31,7 @@ export function Header({ onNavigate, currentRoute }) {
       <div class="flex justify-between items-center px-2">
 
         <a href="/" class="flex items-center gap-1">
-          <div class="size-12">${EcLogo}</div>
+          <div class="size-12">${EcLogo} </div>
           <span class="text-xl font-semibold hidden sm:inline">ECportfolio</span>
         </a>
 
