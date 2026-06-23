@@ -21,7 +21,7 @@ export function ShopProductImageGallery(
 
     const container = document.createElement("div");
     container.id = "ShopProductElementGallery" + props.cartItem.id;
-    container.className = "h-75 min-w-64 bg-white border border-gray-200 rounded-lg shadow-xs";
+    container.className = "h-75 min-w-64  bg-white border border-gray-200 rounded-lg shadow-xs dark:bg-gray-800 dark:border-gray-700";
     let valueQuantity = props.cartItem.quantity;
     let modifyValueOnlyInVue: ((arg0: number) => void) | null = null
 

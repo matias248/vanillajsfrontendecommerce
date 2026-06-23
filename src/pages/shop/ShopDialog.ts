@@ -32,7 +32,7 @@ export class ShopSelectorDialog {
     constructor(props: ShopSelectorDialogProps) {
         this.props = props
         this.root = document.createElement("div")
-        this.root.className = "fixed h-[100vh] bg-gray-300 dark:bg-gray-500 top-0 left-0 max-[460px]:w-[50%] w-[40%] md:w-[30%] z-10 rounded-r-lg flex flex-col gap-1 px-1 transition-transform duration-500 "
+        this.root.className = "fixed h-dvh bg-gray-300 dark:bg-gray-500 top-0 left-0 max-[460px]:w-[50%] w-[40%] md:w-[30%] z-10 rounded-r-lg flex flex-col gap-1 px-1 transition-transform duration-500 "
         this.storeListContainer = document.createElement("div")
         this.storeListContainer.className = "flex-1 overflow-auto mb-2"
         // Crear root

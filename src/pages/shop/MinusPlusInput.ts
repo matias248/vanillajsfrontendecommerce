@@ -17,7 +17,7 @@ export function MinusPlusInput(props: MinusPlusInputInterface): {htmlelement:HTM
 
     const input = document.createElement("input");
     input.id = props.id + "input";
-    input.className = "mx-2 border border-gray-200 text-center w-16 h-10";
+    input.className = "mx-2 border border-gray-200 text-center w-16 h-10 dark:bg-white";
     input.type = "text";
     
 

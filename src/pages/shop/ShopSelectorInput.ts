@@ -64,7 +64,7 @@ export class ShopSelectorInput {
         storeNameContainer.setAttribute('name', "storeNameContainer");
 
         let arrowContainer = document.createElement('div');
-        arrowContainer.className = "size-[40px] flex items-center justify-center"
+        arrowContainer.className = "size-[40px] flex items-center justify-center dark:text-white"
         arrowContainer.textContent = "▼"
         container.appendChild(myStoreTextContainer);
         container.appendChild(storeNameContainer);
