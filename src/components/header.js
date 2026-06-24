@@ -2,13 +2,13 @@ import { EcLogo } from "../images/ecPortofolio.js";
 import { formsIcon } from "../images/formIcon.js";
 import { shopIcon } from "../images/shopIcon.js";
 
-export function Header({ onNavigate, currentRoute }) {
+export function Header({ onNavigate, currentApp }) {
   const header = document.createElement("header");
   header.className = "h-[64px] mb-8";
 
   let buttons = "";
 
-  if (currentRoute !== "/stores") {
+  if (currentApp !== "Forms") {
     buttons += `
       <button data-route="/stores" class="nav-btn text-white bg-blue-600 hover:bg-blue-700 flex gap-1 px-4 py-2 rounded-lg">
         <div id=NavigationFormsApp class="size-6">${formsIcon}</div>
@@ -17,7 +17,7 @@ export function Header({ onNavigate, currentRoute }) {
     `;
   }
 
-  if (currentRoute !== "/shop") {
+  if (currentApp !== "Shop") {
     buttons += `
       <button data-route="/shop" class="nav-btn text-white bg-blue-600 hover:bg-blue-700 flex gap-1 px-4 py-2 rounded-lg">
         <div id=NavigationShopApp class="size-6">${shopIcon}</div>
