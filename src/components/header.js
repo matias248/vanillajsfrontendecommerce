@@ -30,10 +30,10 @@ export function Header({ onNavigate, currentApp }) {
     <nav class="bg-slate-100 py-[10px] h-full dark:bg-gray-800 h-full">
       <div class="flex justify-between items-center px-2">
 
-        <a href="/" class="flex items-center gap-1">
+        <button data-route="/" class="flex items-center gap-1">
           <div class="size-12">${EcLogo} </div>
           <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hidden sm:inline">ECportfolio</span>
-        </a>
+        </button>
 
         <div class="flex gap-2">
           ${buttons}
